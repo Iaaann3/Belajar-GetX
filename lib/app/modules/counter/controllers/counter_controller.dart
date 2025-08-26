@@ -14,7 +14,7 @@ class CounterController extends GetxController {
         'Peringatan',
         'Hitungan sudah mencapai 100',
         backgroundColor: Colors.red,
-        icon: Icon(Icons.warning, color: Colors.white),
+        icon: Icon(Icons.warning, color: Colors.white), 
         colorText: Colors.white,
       );
     }
