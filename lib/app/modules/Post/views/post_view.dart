@@ -1,3 +1,4 @@
+import 'package:belajar_getx/app/modules/Post/views/create_view.dart';
 import 'package:belajar_getx/app/modules/Post/views/post_detail_view_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -44,13 +45,20 @@ class PostView extends GetView<PostController> {
           itemBuilder: (ctx, i) {
             final post = posts[i];
             return ListTile(
-              leading: Image.network(
-                'https://picsum.photos/id/${post.id % 1000}/64/64',
-                fit: BoxFit.cover,
+              leading: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  post.foto != null && post.foto!.isNotEmpty
+                      ? post.foto!
+                      : 'http://127.0.0.1:8000/storage/default.png',
+                  fit: BoxFit.cover,
+                  width: 64,
+                  height: 64,
+                ),
               ),
-              title: Text(post.title),
+              title: Text(post.title ?? '-'),
               subtitle: Text(
-                post.body,
+                post.content ?? '-',
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -59,6 +67,16 @@ class PostView extends GetView<PostController> {
           },
         );
       }),
+
+      // Tombol Create Post
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          Get.to(() => PostCreateView());
+        },
+        icon: const Icon(Icons.add),
+        label: const Text("Create"),
+        backgroundColor: Colors.blueAccent,
+      ),
     );
   }
 }

@@ -2,9 +2,9 @@ import 'package:belajar_getx/app/data/models/post.dart';
 import 'package:flutter/material.dart';
 
 class PostDetailView extends StatelessWidget {
-  final Post post;
+  final PostModel post; // ganti ke PostModel
 
-  PostDetailView({Key? key, required this.post}) : super(key: key);
+  const PostDetailView({Key? key, required this.post}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,8 @@ class PostDetailView extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(12),
                 child: Image.network(
-                  'https://picsum.photos/id/${post.id % 1000}/400/250',
+                  post.foto ??
+                      'https://picsum.photos/id/${post.id! % 1000}/400/250',
                   fit: BoxFit.cover,
                 ),
               ),
@@ -27,14 +28,15 @@ class PostDetailView extends StatelessWidget {
             const SizedBox(height: 16),
 
             Text(
-              post.title,
-              style: Theme.of(
-                context,
-              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+              post.title ?? "-",
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.copyWith(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 12),
 
-            Text(post.body, style: Theme.of(context).textTheme.bodyLarge),
+            Text(post.content ?? "-", style: Theme.of(context).textTheme.bodyLarge),
           ],
         ),
       ),

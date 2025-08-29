@@ -1,20 +1,52 @@
-class Post {
-  final int id,  userId;
-  final String title, body;
+// To parse this JSON data, do
+//
+//     final postModel = postModelFromJson(jsonString);
 
-  Post({
-    required this.id,
-    required this.userId,
-    required this.title,
-    required this.body,
+import 'dart:convert';
+
+PostModel postModelFromJson(String str) => PostModel.fromJson(json.decode(str));
+String postModelToJson(PostModel data) => json.encode(data.toJson());
+
+class PostModel {
+  int? id;
+  String? title;
+  String? content;
+  String? slug;
+  int? status;
+  String? foto;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+
+  PostModel({
+    this.id,
+    this.title,
+    this.content,
+    this.slug,
+    this.status,
+    this.foto,
+    this.createdAt,
+    this.updatedAt,
   });
 
-  factory Post.fromJson(Map<String, dynamic> json) {
-    return Post(
-      id: json['id'],
-      userId: json['userId'],
-      title: json['title'],
-      body: json['body'],
-    );
-  }
+  factory PostModel.fromJson(Map<String, dynamic> json) => PostModel(
+        id: json["id"],
+        title: json["title"],
+        content: json["content"],
+        slug: json["slug"],
+        status: json["status"],
+        foto: json["foto"],
+        createdAt: json["created_at"] == null ? null : DateTime.parse(json["created_at"]),
+        updatedAt: json["updated_at"] == null ? null : DateTime.parse(json["updated_at"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "title": title,
+        "content": content,
+        "slug": slug,
+        "status": status,
+        "foto": foto,
+        "created_at": createdAt?.toIso8601String(),
+        "updated_at": updatedAt?.toIso8601String(),
+      };
 }
